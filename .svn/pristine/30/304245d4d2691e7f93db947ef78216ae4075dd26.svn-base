@@ -1,0 +1,60 @@
+package com.bpmco.tramitefacil;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+
+import android.view.View;
+import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.Button;
+
+
+public class Activity_PQRRegister extends Activity implements View.OnClickListener{
+    private String pqrRadicado;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pqrregister);
+
+        TextView txtHeader = (TextView)findViewById(R.id.txtHeader);
+        ImageView imgPQR = (ImageView)findViewById(R.id.imgPQR);
+        TextView txtResult = (TextView)findViewById(R.id.txtResult);
+        Button btnResult = (Button)findViewById(R.id.btnResult);
+        //WebView webTwitter = (WebView)findViewById(R.id.webTwitter);
+        Button btnBack = (Button)findViewById(R.id.btnBack);
+
+        //TODO: invocar de forma asíncrona
+        pqrRadicado = sendPQR();
+
+        //TODO: poner en values/strings
+        txtHeader.setText("PQR Registrada");
+        imgPQR.setImageResource(R.drawable.pqr_sucess);
+        txtResult.setText("Se radicó con éxito tu solicitud");
+        btnResult.setText("No."+pqrRadicado);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity__pqrregister, menu);
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == findViewById(R.id.btnBack).getId()){
+            Intent i = new Intent(Activity_PQRRegister.this, MainActivity.class);
+            startActivityForResult(i, 1);
+        }
+    }
+
+    private String sendPQR(){
+        //TODO: tomar el Id local de la PQR e intentar enviarla al WS para su registro
+        return "1234";
+    }
+    
+}

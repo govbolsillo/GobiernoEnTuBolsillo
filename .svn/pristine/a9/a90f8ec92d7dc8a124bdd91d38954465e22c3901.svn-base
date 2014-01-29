@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/footer">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab1"
+            android:text="@string/tab1"
+            android:layout_weight="1"
+            style="@style/textoEncabezado"
+            android:textSize="13dp"
+            android:drawableTop="@drawable/flecha"
+            android:background="@drawable/btnfooter"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab2"
+            android:text="@string/tab2"
+            android:layout_weight="1"
+            style="@style/textoEncabezado"
+            android:textSize="13dp"
+            android:drawableTop="@drawable/flecha"
+            android:background="@drawable/btnfooter"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab3"
+            android:text="@string/tab3"
+            android:layout_weight="1"
+            style="@style/textoEncabezado"
+            android:textSize="13dp"
+            android:drawableTop="@drawable/flecha"
+            android:background="@drawable/btnfooter"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab4"
+            android:text="@string/tab4"
+            android:layout_weight="1"
+            style="@style/textoEncabezado"
+            android:textSize="13dp"
+            android:drawableTop="@drawable/flecha"
+            android:background="@drawable/btnfooter"/>
+
+    </LinearLayout>
+
+</LinearLayout>

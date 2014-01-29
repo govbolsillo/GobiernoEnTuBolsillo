@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <gradient android:type="linear"
+                android:gradientRadius="250"
+                android:startColor="@color/btn_header_pressed_start"
+                android:endColor="@color/btn_header_pressed_end"/>
+
+            <corners
+                android:topLeftRadius="7dp"
+                android:bottomLeftRadius="7dp"
+                android:bottomRightRadius="7dp"
+                android:topRightRadius="7dp"
+                />
+
+            <padding
+                android:left="3dp"
+                android:top="3dp"
+                android:right="3dp"
+                android:bottom="3dp" />
+        </shape>
+    </item>
+</selector>

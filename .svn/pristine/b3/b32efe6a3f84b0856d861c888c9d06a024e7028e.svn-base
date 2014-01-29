@@ -1,0 +1,48 @@
+package com.bpmco.tramitefacil.Database;
+
+import android.database.sqlite.SQLiteDatabase;
+
+/**
+ * Created by smarin on 3/10/13.
+ */
+public class DBHandlerTramite {
+
+    private SQLiteDatabase db;
+    private String _tabla;
+
+    private static DBHandlerTramite instance = null;
+
+    private static final String createTablaEntidad = "CREATE TABLE" +
+            " frm_trf_elemento (ciuId INTEGER PRIMARY KEY ASC, ciuNombre CHAR(50)" +
+            ",ciuApellidos CHAR(50), ciuDireccion CHAR(50), ciuTelefono CHAR(10), ciuCelular CHAR(10)" +
+            ",ciu verificadoHash CHAR(255))";
+
+
+    private synchronized static void createInstance(SQLiteDatabase db, String tabla)
+    {
+        instance = new DBHandlerTramite(db,tabla);
+    }
+
+    public static DBHandlerTramite getInstance(SQLiteDatabase db, String tabla)
+    {
+        if(instance == null)
+        {
+            createInstance(db, tabla);
+        }
+        return instance;
+    }
+
+    private DBHandlerTramite(SQLiteDatabase db, String tabla)
+    {
+        this.db = db;
+        this._tabla = tabla;
+    }
+
+    public void creartabla()
+    {
+        db.execSQL(createTablaEntidad);
+    }
+
+
+
+}

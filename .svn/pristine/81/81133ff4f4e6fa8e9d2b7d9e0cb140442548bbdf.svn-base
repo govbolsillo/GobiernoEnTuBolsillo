@@ -1,0 +1,29 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.bpmco.tramitefacil">
+
+    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="16"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme">
+        <activity android:label="@string/app_name" android:name="com.bpmco.tramitefacil.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:label="@string/title_activity_activity_listado_pqr" android:name="com.bpmco.tramitefacil.Activity_listadoPqr">
+        </activity>
+        <activity android:label="@string/title_activity_activity_qd_saber" android:name="com.bpmco.tramitefacil.Activity_qdSaber">
+        </activity>
+        <activity android:label="@string/title_activity_activity__pqrregister" android:name="com.bpmco.tramitefacil.Activity_PQRRegister">
+        </activity>
+        <activity android:label="@string/title_activity_activity__datos_personales" android:name="com.bpmco.tramitefacil.Activity_DatosPersonales">
+        </activity>
+        <activity android:label="@string/title_activity_activity__mis_pqr" android:name="com.bpmco.tramitefacil.Activity_MisPqr">
+        </activity>
+        <activity android:label="@string/title_activity_activity_render" android:name="com.bpmco.tramitefacil.Activity_render">
+        </activity>
+    </application>
+
+</manifest>

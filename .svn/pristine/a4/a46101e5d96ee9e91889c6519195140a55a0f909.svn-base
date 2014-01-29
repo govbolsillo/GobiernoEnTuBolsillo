@@ -1,0 +1,108 @@
+package com.bpmco.tramitefacil;
+
+import android.app.Activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.app.Activity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Activity_listadoPqr extends Activity implements View.OnClickListener{
+
+    Button btnAtras = null;
+    Button btnHome = null;
+    EditText buscador = null;
+    LinearLayout lyBtnPqr = null;
+    ListView listaPqr = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.listado_prq);
+
+        listaPqr = (ListView)findViewById(R.id.lista);
+
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1,
+                getModel());
+
+        listaPqr.setAdapter(adapter);
+        buscador = (EditText)findViewById(R.id.txtFiltro);
+
+        buscador.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                adapter.getFilter().filter(s.toString());
+                ViewGroup.LayoutParams params = listaPqr.getLayoutParams();
+                if(s.toString().length() > 0){
+                    params.height = adapter.getCount()  * 70;
+                }else{
+                    params.height = 300;
+                }
+                listaPqr.setLayoutParams(params);
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        btnAtras = (Button)findViewById(R.id.btnBack);
+        btnHome = (Button)findViewById(R.id.btnHome);
+
+        btnAtras.setOnClickListener(this);
+        btnHome.setOnClickListener(this);
+
+        lyBtnPqr = (LinearLayout)findViewById(R.id.layoutBtnPqr);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_listado_pqr, menu);
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == btnAtras){
+            Intent i = new Intent(Activity_listadoPqr.this, MainActivity.class);
+            startActivityForResult(i, 1);
+        }
+
+        if(view == btnHome){
+            Intent i = new Intent(Activity_listadoPqr.this, MainActivity.class);
+            startActivityForResult(i, 1);
+        }
+    }
+
+    private List<String> getModel() {
+        List<String> list = new ArrayList<String>();
+        list.add("Prq Salud");
+        list.add("Par Rapido");
+        list.add("Pqr General");
+        list.add("Pqr Anonimo");
+        list.add("Otro");
+        return list;
+    }
+}

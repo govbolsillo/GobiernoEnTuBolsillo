@@ -1,0 +1,139 @@
+package com.bpmco.tramitefacil;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+
+import android.view.View;
+import android.view.Window;
+import android.webkit.WebView;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.Wsdl2Code.WebServices.pqrdService.archivoAdjuntoVO;
+import com.Wsdl2Code.WebServices.pqrdService.registrarPqrAsync;
+import com.Wsdl2Code.WebServices.pqrdService.registroPQRDVO;
+import com.Wsdl2Code.WebServices.pqrdService.respuestaRegistroVO;
+import com.bpmco.tramitefacil.DTO.Contexto;
+import com.bpmco.tramitefacil.DTO.Registro;
+import com.bpmco.tramitefacil.Database.DatabaseHandler;
+
+public class Activity_PQRRegister extends Activity implements View.OnClickListener{
+    private DatabaseHandler manejador;
+
+    public TextView txtActividadTitulo;
+    public ImageButton btnAtras;
+    public ImageButton btnHome;
+    public ImageView imgPQR;
+    public TextView txtResult;
+    public WebView webTwitter;
+
+    private Registro reg;
+    private Contexto cont;
+
+    private registrarPqrAsync regPqrAsync;
+
+    private registroPQRDVO pqr;
+    private byte[] foto;
+    private byte[] video;
+    private archivoAdjuntoVO fotoA;
+    private archivoAdjuntoVO videoA;
+
+    private respuestaRegistroVO pqrResp;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pqrregister);
+
+        txtActividadTitulo = (TextView)findViewById(R.id.txtcabecera);
+        btnAtras = (ImageButton)findViewById(R.id.btnAtrasIco);
+        btnHome = (ImageButton)findViewById(R.id.btnHomeIco);
+        imgPQR = (ImageView)findViewById(R.id.imgPQR);
+        txtResult = (TextView)findViewById(R.id.txtResult);
+        webTwitter = (WebView)findViewById(R.id.webTwitter);
+
+        imgPQR.setImageResource(R.drawable.pqr_wait);
+
+        //TODO: strings
+        txtActividadTitulo.setText("Registro PQR");
+        btnAtras.setOnClickListener(this);
+        btnHome.setOnClickListener(this);
+
+        try{
+            manejador = DatabaseHandler.getInstance();
+        }catch (Exception e){
+            //TODO: strings
+            Toast.makeText(this, "No se Puede Crear o Abrir la Base de Datos", 2000).show();
+            e.printStackTrace();
+        }
+
+        sendPQR();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity__pqrregister, menu);
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == btnAtras){
+            Intent i = new Intent(Activity_PQRRegister.this, Activity_listadoPqr.class);
+            startActivity(i);
+        }
+
+        if(view == btnHome){
+            Intent i = new Intent(Activity_PQRRegister.this, Activity_listadoPqr.class);
+            startActivity(i);
+        }
+    }
+
+    registrarPqrAsync.OnAsyncResult asynResult = new registrarPqrAsync.OnAsyncResult() {
+
+        @Override
+        public void onResultSuccess(final int resultCode, final String message, final respuestaRegistroVO pqrResult) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    cont.setTraId(null);
+                    cont.setCiuId(null);
+                    cont.setElePagina(null);
+                    cont.setMaxPage(null);
+                    cont.setRegId(null);
+                    manejador.getHandlerContexto().guardarContexto(cont);
+                    imgPQR.setImageResource(R.drawable.pqr_sucess);
+                    txtResult.setText(message);
+                }
+            });
+        }
+
+        @Override
+        public void onResultFail(final int resultCode, final String errorMessage) {
+            // need to add this part in ui thread.
+            // as you will then thread exception.
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    imgPQR.setImageResource(R.drawable.pqr_error);
+                    txtResult.setText(errorMessage);
+                }
+            });
+        }
+    };
+
+    private void sendPQR(){
+        cont = manejador.getHandlerContexto().getContexto();
+        regPqrAsync = new registrarPqrAsync();
+        regPqrAsync.setRegId(cont.getRegId());
+
+        regPqrAsync.setOnResultListener(asynResult);
+        regPqrAsync.execute();
+    }
+}

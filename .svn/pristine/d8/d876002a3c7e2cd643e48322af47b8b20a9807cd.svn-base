@@ -1,0 +1,43 @@
+package com.bpmco.tramitefacil.Database;
+
+import android.database.sqlite.SQLiteDatabase;
+
+/**
+ * Created by smarin on 11/10/13.
+ */
+public class DBHandlerElementoRespuesta {
+
+
+    private SQLiteDatabase db;
+    private String _tabla;
+
+    private static DBHandlerElementoRespuesta instance = null;
+
+    private static final String createTabla = "CREATE TABLE frm_trf_elementoRespuesta (resId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, regId INTEGER, eleId INTEGER, resValor TEXT)";
+
+    private synchronized static void createInstance(SQLiteDatabase db, String tabla)
+    {
+        instance = new DBHandlerElementoRespuesta(db,tabla);
+    }
+
+    public static DBHandlerElementoRespuesta getInstance(SQLiteDatabase db, String tabla)
+    {
+        if(instance == null)
+        {
+            createInstance(db, tabla);
+        }
+        return instance;
+    }
+
+    private DBHandlerElementoRespuesta(SQLiteDatabase db, String tabla)
+    {
+        this.db = db;
+        this._tabla = tabla;
+    }
+
+    public void creartabla()
+    {
+        db.execSQL(createTabla);
+    }
+
+}

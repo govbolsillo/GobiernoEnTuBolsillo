@@ -1,0 +1,29 @@
+package com.bpmco.tramitefacil;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.Window;
+import android.widget.TextView;
+
+public class Activity_MisPqr extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_mispqr);
+
+        TextView titulo = (TextView)findViewById(R.id.txtcabecera);
+        titulo.setText(this.getString(R.string.tituloMisPqr));
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity__mis_pqr, menu);
+        return true;
+    }
+    
+}

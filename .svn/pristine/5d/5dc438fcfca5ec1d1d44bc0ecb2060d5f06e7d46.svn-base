@@ -1,0 +1,99 @@
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/ScrollIni"
+    android:layout_gravity="left|center_vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity" >
+
+        <include
+            android:id="@+id/headerListado"
+            layout="@layout/header_listado_pqr"
+            android:layout_width="fill_parent" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="¿Que Debo Saber?"
+            android:id="@+id/btnSaber"
+            style="@style/textoEncabezado"
+            android:background="@drawable/botoningresar"/>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/txtFiltro"
+            android:layout_gravity="center"
+            style="@style/filtro"
+            android:background="@drawable/filtro"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/layoutBtnPqr"
+            android:layout_gravity="center">
+
+            <!--<Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="PQR Salud"
+                android:id="@+id/btnPqrSalud"
+                android:drawableRight="@drawable/flecha"
+                style="@style/textoEncabezado"
+                android:background="@drawable/botonpqr"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="PQR Rapido"
+                android:id="@+id/btnPqrRapido"
+                android:drawableRight="@drawable/flecha"
+                style="@style/textoEncabezado"
+                android:background="@drawable/botonpqr"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="PQR General"
+                android:id="@+id/btnPqrGeneral"
+                android:drawableRight="@drawable/flecha"
+                style="@style/textoEncabezado"
+                android:background="@drawable/botonpqr"/>-->
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/lista"
+                android:layout_gravity="center"
+                android:background="@drawable/botonpqr"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView><!-- From: file:/C:/Users/Cristian%20Cantillo/AndroidStudioProjects/TramiteFacil/TramiteFacil/src/main/res/layout/listado_prq.xml -->

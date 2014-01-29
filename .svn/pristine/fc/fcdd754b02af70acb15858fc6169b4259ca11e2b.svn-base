@@ -1,0 +1,140 @@
+package com.bpmco.tramitefacil;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.bpmco.tramitefacil.DTO.Contexto;
+import com.bpmco.tramitefacil.DTO.Elemento;
+import com.bpmco.tramitefacil.Database.DatabaseHandler;
+
+import java.util.List;
+
+/**
+ * Created by smarin on 10/10/13.
+ */
+public class Activity_frmrender extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_frmrender);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity__mis_pqr, menu);
+        return true;
+    }
+
+
+    public void startRender()
+    {
+        DatabaseHandler hand = DatabaseHandler.getInstance();
+        Contexto contexto = hand.getHandlerContexto().getContexto();
+        List<Elemento> list = hand.getHandlerElemento().getElementos(contexto.getElePagina(),contexto.getTraId());
+        renderForm(list);
+    }
+
+
+    public void renderForm(List<Elemento> objForm)
+    {
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+        for(int i = 0; i < objForm.size(); i++) {
+
+            String id = objForm.get(i).getId();
+            //String nombreCampo = objForm.get(i).get();
+            char tipo  = objForm.get(i).getTipo().charAt(0);
+            String etiqueta = objForm.get(i).getEtiqueta();
+            String[] opciones = objForm.get(i).getOpciones().split(";");
+
+
+            switch (tipo)
+            {
+                case 't':
+                    LinearLayout layoutText = new LinearLayout(this);
+                    layoutText.setOrientation(LinearLayout.HORIZONTAL);
+                    layoutText.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+                    TextView labelText = new TextView(getApplicationContext());
+                    labelText.setText(etiqueta + " :");
+                    labelText.setTextColor(Color.BLACK);
+                    labelText.setTextSize(18);
+
+                    layoutText.addView(labelText);
+
+                    EditText text = new EditText(getApplicationContext());
+                    text.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+                    text.setTextColor(Color.BLACK);
+                    text.setTextSize(20);
+
+                    layoutText.addView(text);
+                    layout.addView(layoutText);
+
+                    break;
+                case  'l':
+                    TextView label = new TextView(getApplicationContext());
+                    label.setText(etiqueta);
+                    label.setTextSize(16);
+                    layout.addView(label);
+                    break;
+                case 'r':
+                    TextView labelRadio = new TextView(getApplicationContext());
+                    labelRadio.setTextColor(Color.BLACK);
+                    labelRadio.setText(etiqueta + ":");
+                    labelRadio.setTextSize(18);
+                    layout.addView(labelRadio);
+                    RadioGroup grupoRadio = new RadioGroup(getApplicationContext());
+
+
+                    for(int r = 0; r < opciones.length; r++) {
+                        RadioButton radio = new RadioButton(getApplicationContext());
+                        radio.setText(opciones[r]);
+                        radio.setTextColor(Color.BLACK);
+                        grupoRadio.addView(radio);
+                        grupoRadio.setOrientation(LinearLayout.HORIZONTAL);
+                    }
+
+                    layout.addView(grupoRadio);
+
+                    break;
+                case 's':
+
+                    LinearLayout layoutSelect = new LinearLayout(this);
+                    layoutSelect.setOrientation(LinearLayout.HORIZONTAL);
+                    layoutSelect.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
+                    TextView labelSelect = new TextView(getApplicationContext());
+                    labelSelect.setText(etiqueta + " :");
+                    labelSelect.setTextColor(Color.BLACK);
+                    labelSelect.setTextSize(18);
+                    layout.addView(labelSelect);
+
+                    Spinner select = new Spinner(getApplicationContext());
+
+                    ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, opciones);
+                    select.setAdapter(adapter);
+
+                    layout.addView(select);
+
+                    break;
+            }
+        }
+    }
+
+}

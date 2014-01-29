@@ -1,0 +1,226 @@
+package com.bpmco.tramitefacil;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+
+import android.view.View;
+import android.view.Window;
+import android.webkit.WebView;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.Wsdl2Code.WebServices.pqrdService.VectorByte;
+import com.Wsdl2Code.WebServices.pqrdService.archivoAdjuntoVO;
+import com.Wsdl2Code.WebServices.pqrdService.registrarPqrAsync;
+import com.Wsdl2Code.WebServices.pqrdService.registroPQRDVO;
+import com.Wsdl2Code.WebServices.pqrdService.respuestaRegistroVO;
+import com.alcaldia.pqrws.alcaldiaWS;
+import com.bpmco.tramitefacil.DTO.Ciudadano;
+import com.bpmco.tramitefacil.DTO.Contexto;
+import com.bpmco.tramitefacil.DTO.Elemento;
+import com.bpmco.tramitefacil.DTO.Registro;
+import com.bpmco.tramitefacil.Database.DatabaseHandler;
+
+import java.io.ByteArrayOutputStream;
+import java.util.Iterator;
+import java.util.List;
+
+
+public class Activity_PQRRegister extends Activity implements View.OnClickListener{
+    private DatabaseHandler manejador;
+
+    public TextView txtActividadTitulo;
+    public ImageButton btnAtras;
+    public ImageButton btnHome;
+    public ImageView imgPQR;
+    public TextView txtResult;
+    public WebView webTwitter;
+
+    private Registro reg;
+    private Contexto cont;
+
+    private registrarPqrAsync regPqrAsync;
+
+    private registroPQRDVO pqr;
+    private byte[] foto;
+    private byte[] video;
+    private archivoAdjuntoVO fotoA;
+    private archivoAdjuntoVO videoA;
+
+    private respuestaRegistroVO pqrResp;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pqrregister);
+
+        txtActividadTitulo = (TextView)findViewById(R.id.txtcabecera);
+        btnAtras = (ImageButton)findViewById(R.id.btnAtrasIco);
+        btnHome = (ImageButton)findViewById(R.id.btnHomeIco);
+        imgPQR = (ImageView)findViewById(R.id.imgPQR);
+        txtResult = (TextView)findViewById(R.id.txtResult);
+        webTwitter = (WebView)findViewById(R.id.webTwitter);
+
+        imgPQR.setImageResource(R.drawable.pqr_sucess);
+
+
+        //TODO: strings
+        txtActividadTitulo.setText("Registro PQR");
+        btnAtras.setOnClickListener(this);
+        btnHome.setOnClickListener(this);
+
+        try{
+            manejador = DatabaseHandler.getInstance();
+        }catch (Exception e){
+            //TODO: strings
+            Toast.makeText(this, "No se Puede Crear o Abrir la Base de Datos", 2000).show();
+            e.printStackTrace();
+        }
+
+        sendPQR();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity__pqrregister, menu);
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == btnAtras){
+            Intent i = new Intent(Activity_PQRRegister.this, Activity_listadoPqr.class);
+            startActivity(i);
+        }
+
+        if(view == btnHome){
+            Intent i = new Intent(Activity_PQRRegister.this, Activity_listadoPqr.class);
+            startActivity(i);
+        }
+    }
+
+    private int setPQR(){
+        cont = manejador.getHandlerContexto().getContexto();
+        reg =  manejador.getHandlerRegistro().getById(cont.getRegId());
+        Ciudadano ciu =  manejador.getHandlerCiudadano().getCiudadano(cont.getCiuId());
+
+        pqr = new registroPQRDVO();
+
+        //TODO: Debe ajustarse la DB y el combo a Long
+        pqr.tipoIdentificacion = 10;//ciu.getTipoDoc();
+        //pqr.tipoIdentificacionSpecified = true;
+        pqr.idCiudadano = ciu.getDocumento();
+        //TODO: tomar la fecha del sistema y formatear
+        pqr.fechaSolicitud = "2013-10-16T13:20:00-05:00";
+        //pqr.fechaSolicitudSpecified = true;
+        //TODO: tomar el tipo de PQR de los elementos
+        pqr.tipoPQRD = "8";
+
+        pqr.nombres = ciu.getNombres();
+        pqr.apellidos = ciu.getApellidos();
+        pqr.email = ciu.getEmail();
+        pqr.telefonos = ciu.getTelefono();// + " - " + ciu.getCelular();
+
+        pqr.direccion = ciu.getDireccion();
+        //TODO: falta agregar a la DB y al DTO la ciudad
+        pqr.ciudad = "Manizales";
+
+        //TODO: tomar las coordenadas
+        pqr.coordenadasGPS = "5.055460801404837,-75.4915052"; //reg.getGeo();
+
+        //TODO: tomar el lugar de los elementos
+        pqr.lugarDireccion = ciu.getDireccion();
+
+        List<Elemento> listaElementos = manejador.getHandlerElemento().getElementos("0", cont.getTraId(), cont.getRegId());
+        Iterator<Elemento> iterator = listaElementos.iterator();
+
+        String motivo = "";
+
+        while(iterator.hasNext()){
+            Elemento elemento = iterator.next();
+            motivo += elemento.getEtiqueta() + ":" + elemento.getRepuesta();
+        }
+
+        pqr.motivoSolicitud = motivo;
+
+        return 0;
+    }
+
+    private int setFoto(){
+        /*
+        Bitmap bm = BitmapFactory.decodeFile("/storage/extSdCard/Download/Manizales-StartupWeekend-14.jpeg");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+        foto = baos.toByteArray();
+        */
+        foto = null;
+        return 0;
+    }
+
+    private int setVideo(){
+        video = null;
+        return 0;
+    }
+
+    private void sendPQR(){
+        setPQR();
+        setFoto();
+        setVideo();
+
+        regPqrAsync = new registrarPqrAsync();
+        regPqrAsync.setPqr(pqr);
+        regPqrAsync.setFoto(foto);
+        regPqrAsync.setVideo(video);
+        regPqrAsync.setFotoA(fotoA);
+        regPqrAsync.setVideoA(videoA);
+
+        regPqrAsync.setOnResultListener(asynResult);
+        regPqrAsync.execute();
+    }
+
+    registrarPqrAsync.OnAsyncResult asynResult = new registrarPqrAsync.OnAsyncResult() {
+
+        @Override
+        public void onResultSuccess(final int resultCode, final String message, final respuestaRegistroVO pqrResult) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    cont.setTraId(null);
+                    cont.setCiuId(null);
+                    cont.setElePagina(null);
+                    cont.setMaxPage(null);
+                    cont.setRegId(null);
+                    manejador.getHandlerContexto().guardarContexto(cont);
+
+                    reg.setRadicacion(pqrResult.numRadicado + "-" + pqrResult.anno);
+                    reg.setStatus(Registro.Status.RADICADO.toString());
+                    manejador.getHandlerRegistro().save(reg);
+
+                    txtResult.setText(message);
+                }
+            });
+        }
+
+        @Override
+        public void onResultFail(final int resultCode, final String errorMessage) {
+            // need to add this part in ui thread.
+            // as you will then thread exception.
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    txtResult.setText(errorMessage);
+                }
+            });
+
+        }
+    };
+}

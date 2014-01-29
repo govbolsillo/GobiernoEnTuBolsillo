@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/btnatras"
+        android:state_pressed="true" />
+    <item android:drawable="@drawable/btnatras"
+        android:state_focused="true" />
+    <item android:drawable="@drawable/btnatras" />
+</selector><!-- From: file:/C:/Users/Cristian%20Cantillo/AndroidStudioProjects/TramiteFacil/TramiteFacil/src/main/res/drawable-hdpi/atras.xml -->

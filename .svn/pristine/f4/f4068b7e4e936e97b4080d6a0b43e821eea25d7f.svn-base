@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bpmco.tramitefacil"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="16" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.bpmco.tramitefacil.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.bpmco.tramitefacil.Activity_listadoPqr"
+            android:label="@string/title_activity_activity_listado_pqr" >
+        </activity>
+        <activity
+            android:name="com.bpmco.tramitefacil.Activity_qdSaber"
+            android:label="@string/title_activity_activity_qd_saber" >
+        </activity>
+        <activity
+            android:name="com.bpmco.tramitefacil.Activity_PQRRegister"
+            android:label="@string/title_activity_activity__pqrregister" >
+        </activity>
+        <activity
+            android:name="com.bpmco.tramitefacil.Activity_DatosPersonales"
+            android:label="@string/title_activity_activity__datos_personales" >
+        </activity>
+        <activity
+            android:name="com.bpmco.tramitefacil.Activity_MisPqr"
+            android:label="@string/title_activity_activity__mis_pqr" >
+        </activity>
+        <activity
+            android:name="com.bpmco.tramitefacil.Activity_render"
+            android:label="@string/title_activity_activity_render" >
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Tramite Facil</string>
+    <string name="action_settings">Configuracion</string>
+    <string name="tituloEncabezado">Gobierno En Tu Bolsillo</string>
+    <string name="title_activity_activity_listado_pqr">listado_pqr</string>
+    <string name="title_activity_activity_qd_saber">qdsaber</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_activity__pqrregister">PQR Registro</string>
+    <string name="btn_pqrregisterback">Regresar</string>
+
+</resources>

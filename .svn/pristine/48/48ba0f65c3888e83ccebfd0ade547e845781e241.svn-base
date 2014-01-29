@@ -1,0 +1,147 @@
+package com.bpmco.tramitefacil;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.View;
+import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bpmco.tramitefacil.DTO.Ciudadano;
+import com.bpmco.tramitefacil.DTO.Contexto;
+import com.bpmco.tramitefacil.Database.DatabaseHandler;
+
+import java.util.List;
+
+public class Activity_DatosPersonales extends Activity implements View.OnClickListener{
+
+    Button btnAtras = null;
+    Ciudadano ciudadano = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_datospersonales);
+
+        TextView titulo = (TextView)findViewById(R.id.txtcabecera);
+        titulo.setText(this.getString(R.string.titulo_datosPersonales));
+        btnSiguiente = (Button)findViewById(R.id.btnIngresar);
+        btnSiguiente.setText(this.getString(R.string.btnDatosPersonales));
+        btnSiguiente.setOnClickListener(this);
+
+        btnAtras = (Button)findViewById(R.id.btnBack);
+        btnAtras.setOnClickListener(this);
+        spTipoDoc = (Spinner)findViewById(R.id.spTipoDoc);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.tipoDoc,android.R.layout.simple_spinner_item);
+        spTipoDoc.setAdapter(adapter);
+
+        try{
+            manejador = DatabaseHandler.getInstance();
+            cargarDatosCiudadano();
+        }catch (Exception e){
+            Toast.makeText(this,"No se Puede Crear o Abrir la Base de Datos",2000).show();
+            e.printStackTrace();
+        }
+    }
+    Button btnSiguiente = null;
+    Spinner spTipoDoc = null;
+    DatabaseHandler manejador = null;
+
+    public void cargarDatosCiudadano(){
+        ciudadano = manejador.getHandlerCiudadano().getCiudadano();
+        setCampoTexto(R.id.txtNombre, ciudadano.getNombres());
+        setCampoTexto(R.id.txtApellido, ciudadano.getApellidos());
+        setCampoTexto(R.id.txtNumId, ciudadano.getDocumento());
+        setCampoTexto(R.id.txtDir, ciudadano.getDireccion());
+        setCampoTexto(R.id.txtTel, ciudadano.getTelefono());
+        setCampoTexto(R.id.txtEmail, ciudadano.getEmail());
+        setDatoCombo(ciudadano.getTipoDoc());
+    }
+
+    public void guardarDatosCiudadano(){
+        String nombre = getDatoCampoTexto(R.id.txtNombre);
+        String apellido = getDatoCampoTexto(R.id.txtApellido);
+        String numid = getDatoCampoTexto(R.id.txtNumId);
+        String direccion = getDatoCampoTexto(R.id.txtDir);
+        String telefono = getDatoCampoTexto(R.id.txtTel);
+        String email = getDatoCampoTexto(R.id.txtEmail);
+
+        ciudadano.setNombres(nombre);
+        ciudadano.setApellidos(apellido);
+        ciudadano.setDocumento(numid);
+        ciudadano.setDireccion(direccion);
+        ciudadano.setTelefono(telefono);
+        ciudadano.setEmail(email);
+        ciudadano.setTipoDoc(getDatoCombo());
+    }
+
+    public EditText getCampoTexto(int id){
+        EditText campo = (EditText)findViewById(id);
+        return campo;
+    }
+
+    public void setCampoTexto(int id, String dato){
+        getCampoTexto(id).setText(dato);
+    }
+
+    public String getDatoCampoTexto(int id){
+        return getCampoTexto(id).getText().toString();
+    }
+
+    public void setDatoCombo(String dato){
+        int n = spTipoDoc.getCount();
+
+        for(int i = 0; i < n; i++){
+            String valor = spTipoDoc.getItemAtPosition(i).toString();
+            if(valor.equals(dato)){
+                spTipoDoc.setSelection(i);
+                i = n;
+            }
+        }
+    }
+
+    public String getDatoCombo(){
+        return spTipoDoc.getSelectedItem().toString();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity__datos_personales, menu);
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == btnAtras){
+            Intent i = new Intent(Activity_DatosPersonales.this, Activity_listadoPqr.class);
+            startActivity(i);
+        }
+
+        if(view == btnSiguiente){
+            guardarDatosCiudadano();
+
+            String numeroCiudadano = manejador.getHandlerCiudadano().guardarCiudadano(ciudadano);
+
+            if(numeroCiudadano != "-1"){
+                Contexto contexto = new Contexto();
+                contexto.setCiuId(numeroCiudadano);
+                manejador.getHandlerContexto().guardarContexto(contexto);
+                Intent i = new Intent(this, Activity_render.class);
+                startActivityForResult(i, 1);
+            }
+            else{
+                Toast.makeText(this, "Error al crear el perfil en la base de datos", 2000).show();
+            }
+        }
+    }
+}

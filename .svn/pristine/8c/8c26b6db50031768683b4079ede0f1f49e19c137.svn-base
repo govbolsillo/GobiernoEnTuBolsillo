@@ -1,0 +1,155 @@
+package com.bpmco.tramitefacil;
+
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.View;
+import android.view.Window;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.Wsdl2Code.WebServices.pqrdService.getRespuestasPQRDAsync;
+import com.Wsdl2Code.WebServices.pqrdService.VectorrespuestaProcesoVO;
+import com.bpmco.tramitefacil.DTO.Registro;
+import com.bpmco.tramitefacil.Database.DatabaseHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Activity_MisPqr extends Activity implements View.OnClickListener{
+
+    ImageButton btnAtras = null;
+    ImageButton btnHome = null;
+    DatabaseHandler manejador = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_mispqr);
+
+        TextView titulo = (TextView)findViewById(R.id.txtcabecera);
+        titulo.setText(this.getString(R.string.tituloMisPqr));
+
+        btnAtras = (ImageButton)findViewById(R.id.btnAtrasIco);
+        btnHome = (ImageButton)findViewById(R.id.btnHomeIco);
+        btnAtras.setOnClickListener(this);
+        btnHome.setOnClickListener(this);
+        verRegistros();
+    }
+
+    public void verRegistros(){
+        List<Registro> listaRegistros = getRegistros();
+        if(listaRegistros != null || listaRegistros.size() > 0){
+            int n = listaRegistros.size();
+            LinearLayout lyRegistro = (LinearLayout)findViewById(R.id.lyMisPqr);
+
+            for(int i = 0; i < n; i++){
+                LayoutInflater inflater = LayoutInflater.from(this);
+                LinearLayout lyDatos = (LinearLayout)inflater.inflate(R.layout.pqr_registradas,null, false);
+                lyRegistro.addView(lyDatos);
+
+                if((i % 2) != 0){
+                    lyDatos.setBackgroundResource(R.drawable.fondomispqr2);
+                }
+
+                TextView radicado = (TextView)lyDatos.findViewById(R.id.lblRadicado);
+                TextView descripcion = (TextView)lyDatos.findViewById(R.id.lblDesc);
+                TextView fecha = (TextView)lyDatos.findViewById(R.id.lblFecha);
+                ImageView imagen = (ImageView)lyDatos.findViewById(R.id.iconoEstado);
+
+                Registro registro = listaRegistros.get(i);
+                radicado.setText(registro.getRadicacion());
+                descripcion.setText(registro.getInfo());
+                fecha.setText(registro.getFecha().toString());
+
+                if(!registro.getStatus().equals(Registro.Status.FINALIZADO.toString())){
+                    getRespuestasPQRDAsync respPQR = new getRespuestasPQRDAsync();
+                    respPQR.setRegId(registro.getId()+"");
+                    respPQR.setOnResultListener(asynResult);
+                    respPQR.execute();
+                }
+
+
+                if(listaRegistros.get(i).getStatus().equals("0")){
+                    imagen.setBackgroundResource(R.drawable.enregistro);
+                }
+                else if(listaRegistros.get(i).getStatus().equals("1")){
+                    imagen.setBackgroundResource(R.drawable.registrado);
+                }
+                else if(listaRegistros.get(i).getStatus().equals("2")){
+                    imagen.setBackgroundResource(R.drawable.enviado);
+                }else{
+                    imagen.setBackgroundResource(R.drawable.enregistro);
+                }
+            }
+        }else{
+            Toast.makeText(this, "No Se Encontraron Datos registrados", 2000).show();
+        }
+    }
+
+    public List<Registro> getRegistros(){
+        List<Registro> listaRegistro = new ArrayList<Registro>();
+        try{
+            manejador = DatabaseHandler.getInstance();
+            listaRegistro = manejador.getHandlerRegistro().getRegistros();
+        }catch (Exception e){
+            Toast.makeText(this, "No se Puede Abrir la Base de Datos", 2000).show();
+            e.printStackTrace();
+            return null;
+        }
+        return listaRegistro;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity__mis_pqr, menu);
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == btnAtras){
+            Intent i = new Intent(Activity_MisPqr.this, Activity_listadoPqr.class);
+            startActivity(i);
+        }
+
+        if(view == btnHome){
+            Intent i = new Intent(Activity_MisPqr.this, Activity_listadoPqr.class);
+            startActivity(i);
+        }
+    }
+
+    getRespuestasPQRDAsync.OnAsyncResult asynResult = new getRespuestasPQRDAsync.OnAsyncResult() {
+
+        @Override
+        public void onResultSuccess(final int resultCode, final String message, final VectorrespuestaProcesoVO pqrResult) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    //txtResult.setText(message);
+                    String a="";
+                }
+            });
+        }
+
+        @Override
+        public void onResultFail(final int resultCode, final String errorMessage) {
+            // need to add this part in ui thread.
+            // as you will then thread exception.
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    String a="";
+                    //txtResult.setText(errorMessage);
+                }
+            });
+        }
+    };
+}

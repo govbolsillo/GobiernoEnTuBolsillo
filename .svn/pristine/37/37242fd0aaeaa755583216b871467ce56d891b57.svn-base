@@ -1,0 +1,53 @@
+package com.bpmco.tramitefacil;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.View;
+import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+public class Activity_DatosPersonales extends Activity implements View.OnClickListener{
+
+    Button btnAtras = null;
+    Spinner spTipoDoc = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_datospersonales);
+
+        TextView titulo = (TextView)findViewById(R.id.txtcabecera);
+        titulo.setText(this.getString(R.string.titulo_datosPersonales));
+        Button btn = (Button)findViewById(R.id.btnIngresar);
+        btn.setText(this.getString(R.string.btnDatosPersonales));
+
+        btnAtras = (Button)findViewById(R.id.btnBack);
+        btnAtras.setOnClickListener(this);
+        spTipoDoc = (Spinner)findViewById(R.id.spTipoDoc);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.tipoDoc,android.R.layout.simple_spinner_item);
+        spTipoDoc.setAdapter(adapter);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity__datos_personales, menu);
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == btnAtras){
+            Intent i = new Intent(Activity_DatosPersonales.this, Activity_listadoPqr.class);
+            startActivity(i);
+        }
+    }
+}

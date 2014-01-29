@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tipoDoc">
+        <item>Cedula de Ciudadanía</item>
+        <item>NIT</item>
+        <item>Pasaporte</item>
+        <item>Tarjeta de Identidad</item>
+        <item>Cédula de Extranjería</item>
+        <item>Registro Civil</item>
+        <item>Codigo</item>
+    </string-array>
+</resources>

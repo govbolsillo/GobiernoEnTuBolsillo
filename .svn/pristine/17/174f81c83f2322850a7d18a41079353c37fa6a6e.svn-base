@@ -1,0 +1,37 @@
+# incremental data. DO NOT EDIT.
+# format is <lastModified> <length> <SHA-1> <path>
+# Encoding is UTF-8
+1381095827664 1448 543613f0f4e43086904a454c38d9fc96d42c27c6 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\R$string.class
+1380852873575 2097 7f2213df37ba99a68ecddca6f7d1cba93b9c345b C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\DTO\Elemento.class
+1381095827709 744 53bec1490159c915569379d94b72109e7943c0de C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\R$style.class
+1381092613881 2598 5454b0cf7f56bec622516f7981900920e3952699 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\adapterPqr.class
+1381092613714 3549 cc3f94c7d5b6254389ce74dcbd375370b547e5a5 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Activity_listadoPqr.class
+1381006258046 1785 fb283fd01823cdf0a93031450d6399828d38cb18 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\DTO\Tramite.class
+1380892150572 1441 cfcffe39ab40001f9af529fd464b74e6848f8f96 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Database\DBHandlerElemento.class
+1380855624764 1673 f84b45d99f7372fa349cab1b480369d7da943e8e C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\MainActivity.class
+1381008722812 1493 76a0e2cd2be6664b9ec67fe1e209ad81bcc4f514 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Adapter\adapterPqr$1.class
+1381095827662 621 3d21cb889f563461725d022c8aaf6f263b3783c1 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\R$menu.class
+1381089687957 3705 daaf3c4efaeed68041ac4279594379cd3a06a12e C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Database\DBHandlerCiudadano.class
+1381004799570 2098 cf7b0e1bb884ce8c809e26af6cd1207599df389c C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\DTO\Ciudadano.class
+1381088999186 3957 8884095ee6b1848c0b37a02a055e9f7f874eb377 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Database\DatabaseHandler.class
+1380259134231 474 5bdf265fbf2cc262c9ea47fae8929290dc401601 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\BuildConfig.class
+1381095827658 1833 8197ef616ae5541af70ae66802d8051d48b1e10c C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\R$id.class
+1381092613969 3061 d9087b4032bb305e3d85baa12944f3fbbc2a487c C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Adapter\adapterPqr.class
+1380683382896 352 cd6bc711c9470f8c3eeed1d868ad06febe3c32af C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\R$attr.class
+1380892150586 1437 da8daab05c9aa2304ca75969440c8b30b422bd4d C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Database\DBHandlerTramite.class
+1381095827652 528 e320a24745bede62f32bc606281dc11d54854315 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\R$dimen.class
+1381095827654 950 96804ee17b93bc1dd2f0b10d14524fd15e6eeef7 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\R$drawable.class
+1381092613769 1144 51e568ee62c7597b7b15ad12a39d20349f145981 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Activity_MisPqr.class
+1381092613586 5540 ca8b00f5407dadceba71419563f6d32839552a4e C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Activity_DatosPersonales.class
+1381008722183 2031 d95acab950acbe560372014b15e27882a8ad6a53 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Activity_listadoPqr$1.class
+1381008722829 2389 9ca6757dd10e8b48ffbbc847698b3a1db459979e C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Adapter\adapterPqr$2.class
+1381095827650 4818 2fdf42fce776c52a5da5b23614ec77ae3187b904 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\R$color.class
+1381095827726 821 b51c7910c1f0d1a3a59a4852c2ad85a1e46dc212 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\R.class
+1381095827391 2367 ca409e4d155ca183a275d9ba0ee07ef3bc39ba17 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Activity_PQRRegister.class
+1380606332990 1550 09ee8c07061f21bf74d97541b2415a9a835ec2cc C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Activity_listadoPqr$2.class
+1380680901154 2325 cc6348555780dbcf1d2dad063c239af7391a616d C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\adapterPqr$1.class
+1381092613851 2053 4645df47d1aaf70b0e7137f4f8be8774bd17e98f C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\Activity_qdSaber.class
+1380683382853 406 3509c4533e1334e70da49040dc586060715b4c2e C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\R$array.class
+1380593768543 598 c0bc037f4ec6265ef7500c7bc23611bc079b65c1 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\DTO\botonesPqr.class
+1380680901167 590 722cbe2b698e2c9c921be9f1d9479b5c5fa0dc19 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\botonesPqr.class
+1381095827660 880 ac14812e8637ea4ab05830149e9748e08bb1c273 C:\Users\Cristian Cantillo\AndroidStudioProjects\TramiteFacil\TramiteFacil\build\classes\debug\com\bpmco\tramitefacil\R$layout.class

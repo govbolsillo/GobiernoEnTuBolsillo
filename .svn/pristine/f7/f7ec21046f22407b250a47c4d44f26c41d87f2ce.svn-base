@@ -1,0 +1,110 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="left|center_vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/headericonos"
+            android:layout_width="fill_parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tipo de Entidad Generadora de Queja"/>
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/repsips">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/eps"
+                android:checked="true"
+                android:text="EPS"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ips"
+                android:text="IPS"/>
+        </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleccione"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
+            android:id="@+id/spEPSIPS"
+            android:entries="@array/EPS"
+            android:background="@drawable/cuadrotexto"></Spinner>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtEdadMeses"
+        android:text="Nombre Entidad Generadora de Queja"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNombreEntidadQueja"
+        android:background="@drawable/cuadrotexto"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clasifique su queja de Salud"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:id="@+id/spTipoQuejaSalud"
+        android:entries="@array/tipoquejasalud"
+        android:background="@drawable/cuadrotexto"></Spinner>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Motivo de la solicitud"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtMotivo"
+            android:maxLines="10"
+            android:singleLine="false"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="10dp">
+        </View>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSiguiente"
+            android:text="Paso 2 / 3"
+            android:background="@drawable/botoningresar"
+            style="@style/textoEncabezado"/>
+
+    </LinearLayout>
+</ScrollView><!-- From: file:/C:/Users/smarin/AndroidStudioProjects/TramiteFacil/TramiteFacil/src/main/res/layout/activity_form2.xml -->

@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menuAcerca"
+        android:title="@string/menuAcercaDe"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+    <item android:id="@+id/action_settings"
+        android:title="@string/tituloMisPqr"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+</menu>
+<!-- From: file:/C:/Users/smarin/AndroidStudioProjects/TramiteFacil/TramiteFacil/src/main/res/menu/activity_listado_pqr.xml -->

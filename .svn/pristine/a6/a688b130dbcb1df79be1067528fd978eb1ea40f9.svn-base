@@ -1,0 +1,223 @@
+package com.bpmco.tramitefacil;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.View;
+import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bpmco.tramitefacil.DTO.Contexto;
+import com.bpmco.tramitefacil.DTO.Registro;
+import com.bpmco.tramitefacil.DTO.Respuesta;
+import com.bpmco.tramitefacil.Database.DatabaseHandler;
+import com.bpmco.tramitefacil.Database.Validation;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Activity_form1 extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_form1);
+
+
+        DatabaseHandler handler = DatabaseHandler.getInstance();
+        Contexto contexto = handler.getHandlerContexto().getContexto();
+
+        String tramite = contexto.getTraId();
+
+        if(tramite.equals("")){
+            Intent i = new Intent(Activity_form1.this, Activity_listadoPqr.class);
+            startActivityForResult(i, 1);
+        }
+
+
+        TextView titulo = (TextView)findViewById(R.id.txtcabecera);
+        titulo.setText("Formulario");
+
+        RadioGroup rg = (RadioGroup) findViewById(R.id.rbarriovereda);
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                Spinner spinner = (Spinner)findViewById(R.id.spbarriosvereda);
+                ArrayList<String> spinnerArray = new ArrayList<String>();
+                switch(checkedId)
+                {
+                    case R.id.barrio:
+                        spinnerArray = new ArrayList( Arrays.asList(getResources().getStringArray(R.array.barrios)));
+                        ArrayAdapter<String> adapterBarrio = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spinnerArray);
+                        spinner.setAdapter(adapterBarrio);
+                        break;
+                    case R.id.vereda:
+                        spinnerArray = new ArrayList( Arrays.asList(getResources().getStringArray(R.array.veredas)));
+                        ArrayAdapter<String> adapterVereda = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spinnerArray);
+                        spinner.setAdapter(adapterVereda);
+                        break;
+                }
+            }
+        });
+
+        Button botonSiguiente = (Button)findViewById(R.id.btnSiguiente);
+        botonSiguiente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(guardarDatos())
+                {
+                    Intent i = new Intent(Activity_form1.this, Activity_form2.class);
+                    startActivityForResult(i, 1);
+                }
+            }
+        });
+
+        ImageButton btnAtras = (ImageButton)findViewById(R.id.btnAtrasIco);
+        btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        ImageButton btnHome = (ImageButton)findViewById(R.id.btnHomeIco);
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Activity_form1.this, Activity_listadoPqr.class);
+                startActivity(i);
+            }
+        });
+
+
+    }
+
+    public boolean guardarDatos()
+    {
+
+        EditText txtLugar = (EditText)findViewById(R.id.txtlugar);
+
+        RadioGroup rg = (RadioGroup)findViewById(R.id.rbarriovereda);
+        int selected = rg.getCheckedRadioButtonId();
+        RadioButton radioSelected = (RadioButton)findViewById(selected);
+
+        Spinner spRadioVereda = (Spinner)findViewById(R.id.spbarriosvereda);
+        Spinner spTipoDoc = (Spinner)findViewById(R.id.spTipoDoc);
+
+        EditText txtIdenti = (EditText)findViewById(R.id.txtIdenti);
+
+        EditText txtNombreAfectado = (EditText)findViewById(R.id.txtNombreAfectado);
+        EditText txtEdadAnio = (EditText)findViewById(R.id.txtEdadAnio);
+        EditText txtEdadMeses = (EditText)findViewById(R.id.txtEdadMeses);
+
+        String edadMeses = txtEdadMeses.getText().toString();
+        String edadAnio = txtEdadAnio.getText().toString();
+        String nombreAfectado = txtNombreAfectado.getText().toString();
+        String identificacion = txtIdenti.getText().toString();
+        String sTipoDoc = spTipoDoc.getSelectedItem().toString();
+        String sbarrioVereda = spRadioVereda.getSelectedItem().toString();
+        String rbarrioVereda = radioSelected.getText().toString();
+        String lugarProblema = txtLugar.getText().toString();
+
+
+        if(edadMeses.equals("") || edadAnio.equals("") || nombreAfectado.equals("") || identificacion.equals("")
+      || sTipoDoc.equals("") || sbarrioVereda.equals("") || rbarrioVereda.equals("") || lugarProblema.equals("")){
+
+            Toast.makeText(this, "Llene todos los datos faltantes", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+
+        Validation validacion = new Validation();
+
+        DatabaseHandler handler = DatabaseHandler.getInstance();
+        Contexto contexto = handler.getHandlerContexto().getContexto();
+
+        handler.getHandlerElementoRespuesta().checkPageData("1,2,3,4,5,6,7,8,9");
+
+        Registro registro = new Registro();
+        registro.setTraId(Integer.parseInt(contexto.getTraId()));
+        registro.setCiuId(Integer.parseInt(contexto.getCiuId()));
+
+        String idRegistro = contexto.getRegId();
+
+        if(idRegistro.equals("")){
+            idRegistro = handler.getHandlerRegistro().createRegistro(registro);//Crear Registro
+            contexto.setRegId(idRegistro);
+            handler.getHandlerContexto().guardarContexto(contexto);
+        }
+
+        Respuesta respuesta = new Respuesta();
+
+        respuesta.setRegId(idRegistro);
+        respuesta.setEleId(String.valueOf("1"));
+        respuesta.setResValor(lugarProblema);
+
+        handler.getHandlerElementoRespuesta().createRespuesta(respuesta);
+
+        respuesta.setRegId(idRegistro);
+        respuesta.setEleId(String.valueOf("2"));
+        respuesta.setResValor(rbarrioVereda);
+
+        handler.getHandlerElementoRespuesta().createRespuesta(respuesta);
+
+        respuesta.setRegId(idRegistro);
+        respuesta.setEleId(String.valueOf("3"));
+        respuesta.setResValor(sbarrioVereda);
+
+        handler.getHandlerElementoRespuesta().createRespuesta(respuesta);
+
+        respuesta.setRegId(idRegistro);
+        respuesta.setEleId(String.valueOf("4"));
+        respuesta.setResValor(edadAnio);
+
+        handler.getHandlerElementoRespuesta().createRespuesta(respuesta);
+
+        respuesta.setRegId(idRegistro);
+        respuesta.setEleId(String.valueOf("5"));
+        respuesta.setResValor(edadMeses);
+
+        handler.getHandlerElementoRespuesta().createRespuesta(respuesta);
+
+        respuesta.setRegId(idRegistro);
+        respuesta.setEleId(String.valueOf("7"));
+        respuesta.setResValor(sTipoDoc);
+
+        handler.getHandlerElementoRespuesta().createRespuesta(respuesta);
+
+        respuesta.setRegId(idRegistro);
+        respuesta.setEleId(String.valueOf("8"));
+        respuesta.setResValor(identificacion);
+
+        handler.getHandlerElementoRespuesta().createRespuesta(respuesta);
+
+        respuesta.setRegId(idRegistro);
+        respuesta.setEleId(String.valueOf("9"));
+        respuesta.setResValor(nombreAfectado);
+
+        handler.getHandlerElementoRespuesta().createRespuesta(respuesta);
+
+        return true;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_form1, menu);
+        return true;
+    }
+    
+}

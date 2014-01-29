@@ -1,0 +1,32 @@
+package com.bpmco.tramitefacil.DTO;
+
+/**
+ * Created by Cristian Cantillo on 26/09/13.
+ */
+public class botonesPqr
+{
+    private String nombre;
+    private int id;
+
+    public botonesPqr(String nombre, int id){
+        this.setNombre(nombre);
+        this.setId(id);
+    }
+
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+}

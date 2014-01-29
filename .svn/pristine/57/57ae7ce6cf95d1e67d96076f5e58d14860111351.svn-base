@@ -1,0 +1,135 @@
+package com.bpmco.tramitefacil.Database;
+
+
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+
+
+import java.io.File;
+
+/**
+ * Created by BPMCO02 on 12/09/13.
+ */
+public class DatabaseHandler implements Cloneable{
+
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "Tramite.sqlite";
+    private static final String DB_PATH = android.os.Environment.getExternalStorageDirectory().toString();
+    private static final String TABLE_CIU = "ciudadano";
+
+    private static SQLiteDatabase db;
+
+    private static DatabaseHandler instance = null;
+    private static DBHandlerCiudadano handlerCiudadano  = null;
+
+    private DatabaseHandler() {}
+
+    private synchronized static void createInstance() {
+        instance = new DatabaseHandler();
+    }
+
+    public static DatabaseHandler getInstance() {
+        if(instance == null)
+        {
+            createInstance();
+            String ruta = DB_PATH + File.separator + DATABASE_NAME;
+            if(!checkDataBase(ruta))
+            {
+                db = SQLiteDatabase.openOrCreateDatabase(ruta, null);
+                crearHandlers();
+                CreateTables(db);
+                db.setVersion(DATABASE_VERSION);
+            }
+            else
+            {
+                db = SQLiteDatabase.openOrCreateDatabase(ruta, null);
+                crearHandlers();
+                if(db.getVersion() != DATABASE_VERSION)
+                {
+                    Upgrade(db,db.getVersion(),DATABASE_VERSION);
+                }
+            }
+        }
+        return instance;
+    }
+
+    private static void crearHandlers()
+    {
+        handlerCiudadano = DBHandlerCiudadano.getInstance(db, TABLE_CIU);
+    }
+
+    public DBHandlerCiudadano getHandlerCiudadano()
+    {
+        return handlerCiudadano;
+    }
+
+    private static boolean checkDataBase(String path)
+    {
+        try
+        {
+            SQLiteDatabase checkDB = SQLiteDatabase.openDatabase(path, null,SQLiteDatabase.OPEN_READONLY);
+            checkDB.close();
+            return true;
+        }
+        catch (SQLiteException e)
+        {
+            return false;
+        }
+    }
+
+    public void executeSQL(String sql)
+    {
+        db.beginTransaction();
+        db.execSQL(sql);
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        db.close();
+    }
+
+
+    public static boolean CreateTables(SQLiteDatabase db)
+    {
+        try
+        {
+            handlerCiudadano.creartabla();
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean Upgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+    {
+        boolean retorno;
+        try
+        {
+            retorno = true;
+        }
+        catch(Exception ex)
+        {
+            retorno = false;
+        }
+        finally
+        {
+            db.setVersion(newVersion);
+        }
+        return retorno;
+    }
+
+    public boolean PrepararTabla(SQLiteDatabase db, String tabla, String cadenaCreacion){
+        try
+        {
+            db.execSQL("DROP TABLE IF EXISTS " + tabla);
+            db.execSQL(cadenaCreacion);
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
+        return true;
+    }
+
+}
+

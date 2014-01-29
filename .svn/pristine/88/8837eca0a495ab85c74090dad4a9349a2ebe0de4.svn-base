@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Tramite Facil</string>
+    <string name="action_settings">Configuracion</string>
+    <string name="tituloAlcaldia">Alcaldia de Manizales</string>
+    <string name="tituloEncabezado">Gobierno En Tu Bolsillo</string>
+    <string name="title_activity_activity_listado_pqr">listado_pqr</string>
+    <string name="title_activity_activity_qd_saber">qdsaber</string>
+    <string name="title_activity_activity__pqrregister">PQR Registro</string>
+    <string name="btn_pqrregisterback">Regresar</string>
+    <string name="btn_ingresar">Ingresar</string>
+    <string name="label">campo:</string>
+    <string name="title_activity_activity__datos_personales">Activity_DatosPersonales</string>
+    <string name="titulo_qdSaber">¿Que Debo Saber?</string>
+    <string name="titulo_datosPersonales">Datos Personales</string>
+    <string name="btnDatosPersonales">Paso 1 de 4 - Continuar -></string>
+    <string name="labelTipoId">Tipo de Identificación:</string>
+    <string name="labelNumId">No de Identificación:</string>
+    <string name="labelNombre">Nombre:</string>
+    <string name="labelApellido">Apellido:</string>
+    <string name="labelEmail">E-mail:</string>
+    <string name="labelTelefono">Telefono:</string>
+    <string name="labelDireccion">Direccion de Notificación:</string>
+    <string name="labelCiudad">Ciudad de Notificación:</string>
+    <string name="ciudad">Manizales</string>
+    <string name="title_activity_activity__mis_pqr">MisPqr</string>
+    <string name="hello_world">Hello world!</string>
+
+</resources>

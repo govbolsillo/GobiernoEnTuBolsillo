@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <stroke
+                android:width="2dp"
+                android:color="@color/volver_pressed_start" />
+
+            <corners
+                android:topLeftRadius="3dp"
+                android:bottomLeftRadius="3dp"
+                android:topRightRadius="3dp"
+                android:bottomRightRadius="3dp"
+                />
+
+            <padding
+                android:left="2dp"
+                />
+
+        </shape>
+    </item>
+</selector><!-- From: file:/C:/Users/Cristian%20Cantillo/AndroidStudioProjects/TramiteFacil/TramiteFacil/src/main/res/drawable-hdpi/filtro.xml -->

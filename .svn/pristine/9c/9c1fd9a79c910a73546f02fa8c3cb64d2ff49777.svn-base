@@ -1,0 +1,134 @@
+package com.bpmco.tramitefacil;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bpmco.tramitefacil.DTO.Contexto;
+import com.bpmco.tramitefacil.DTO.Registro;
+import com.bpmco.tramitefacil.DTO.Respuesta;
+import com.bpmco.tramitefacil.Database.DatabaseHandler;
+
+public class Activity_Adjuntar extends Activity implements View.OnClickListener{
+
+    ImageButton btnFoto = null;
+    ImageButton btnVideo = null;
+    Button btnRegistrar = null;
+    DatabaseHandler manejador = null;
+
+    static final int ADJUNTAR_ARCHIVO = 2;
+    static final int TOMAR_FOTO = 1;
+    static final int GRABAR_VIDEO = 3;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_adjuntar);
+
+        TextView titulo = (TextView)findViewById(R.id.txtcabecera);
+        titulo.setText(this.getString(R.string.titulo_adjuntar));
+
+        btnFoto = (ImageButton)findViewById(R.id.btnFoto);
+        btnVideo = (ImageButton)findViewById(R.id.btnVideo);
+        btnRegistrar = (Button)findViewById(R.id.btnRegistrar);
+        btnFoto.setOnClickListener(this);
+        btnVideo.setOnClickListener(this);
+        btnRegistrar.setOnClickListener(this);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity__adjuntar, menu);
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == btnFoto)
+        {
+            Intent foto = new Intent(Activity_Adjuntar.this, Activity_Tomar_Foto.class );
+            startActivityForResult(foto, TOMAR_FOTO);
+            return;
+        }
+
+        if(view == btnVideo)
+        {
+            Intent video = new Intent(Activity_Adjuntar.this,Activity_Grabar_Video.class);
+            startActivityForResult(video, GRABAR_VIDEO);
+        }
+
+        if(view == btnRegistrar)
+        {
+            Intent resumen = new Intent(Activity_Adjuntar.this,Activity_Resumen.class);
+            startActivity(resumen);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == ADJUNTAR_ARCHIVO) {
+            if (data.hasExtra("archivo_seleccionado")) {
+                String ruta = data.getExtras().getString("archivo_seleccionado");
+                String nombre = data.getExtras().getString("archivo_nombre");
+            }
+        }
+
+        if(resultCode == RESULT_OK && requestCode == TOMAR_FOTO)
+        {
+            if (data.hasExtra("ruta")) {
+                String ruta = data.getExtras().getString("ruta");
+                String nombre = data.getExtras().getString("nombre");
+                boolean guardo = guardarArchivo(ruta, true);
+                if(guardo){
+                    ImageView img = (ImageView)findViewById(R.id.adjuntoFoto);
+                    img.setImageResource(R.drawable.ok);
+                    TextView lblFoto = (TextView)findViewById(R.id.lblFoto);
+                    lblFoto.setText(this.getString(R.string.lblFoto));
+                }
+            }
+        }
+
+        if(resultCode == RESULT_OK && requestCode == GRABAR_VIDEO)
+        {
+            if (data.hasExtra("ruta")) {
+                String ruta = data.getExtras().getString("ruta");
+                String nombre = data.getExtras().getString("nombre");
+                boolean guardo = guardarArchivo(ruta, false);
+                if(guardo){
+                    ImageView img = (ImageView)findViewById(R.id.adjuntoVideo);
+                    img.setImageResource(R.drawable.ok);
+                    TextView lblVideo = (TextView)findViewById(R.id.lblVideo);
+                    lblVideo.setText(this.getString(R.string.lblVideo));
+                }
+            }
+        }
+    }
+
+    public boolean guardarArchivo(String ruta, boolean esFoto){
+        try{
+            manejador = DatabaseHandler.getInstance();
+            Contexto c = manejador.getHandlerContexto().getContexto();
+            Respuesta resp = new Respuesta();
+            String idTipo = (esFoto)?"20":"22";
+            resp.setEleId(idTipo);
+            resp.setRegId(c.getRegId());
+            resp.setResValor(ruta);
+        }catch (Exception e){
+            Toast.makeText(this, "No se Puede Abrir la Base de Datos", 2000).show();
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+}
